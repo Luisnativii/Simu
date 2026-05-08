@@ -1,21 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 /*
-int LCS(int n1, int n2, string S1, string S2) {
-    mat dp(n1+1, vec(n2+1, -1));
-
-    for(int j = 0; j <= n2; j++) dp[0][j] = 0;
-    for(int i = 0; i <= n1; i++) dp[i][0] = 0;
-
-    for(int i = 1; i <= n1; i++)
-        for(int j = 1; j <= n2; j++)
-            if( S1[i-1] == S2[j-1] )
-                dp[i][j] = 1 + dp[i-1][j-1];
-            else
-                dp[i][j] = max(dp[i][j-1], dp[i-1][j]);
-
-    return dp[n1][n2];
-}
+    Para compilar y ejecutar:
+        g++ -o run 19-UVA11450-Wedding_Shopping.cpp
+        cat 19-input.txt | ./run
 */
 int main() {
     int N;
@@ -38,6 +27,7 @@ int main() {
             p.push_back(p_ik);
         }
 
+        /*
         cout << M << " " << C << "\n";
         for(int k: K) cout << k << " ";
         cout << "\n";
@@ -45,6 +35,24 @@ int main() {
             for(int j = 0; j < p[i].size(); j++)
                 cout << p[i][j] << " ";
         cout << "\n";
+        */
+
+        vector<vector<int>> dp(C+1, vector<int>(M+1,-2));
+        for(int i = 0; i <= C; i++) dp[i][0] = -1;
+        for(int j = 0; j <= M; j++) dp[0][j] = 0;
+
+        for(int i = 1; i <= C; i++)
+            for(int j = 1; j <= M; j++) {
+                dp[i][j] = -1;
+                for(int k = 0; k < K[i-1]; k++)
+                    if( p[i-1][k] <= j && dp[i - 1][j - p[i-1][k]] != -1 )
+                        dp[i][j] = max( dp[i][j] , p[i-1][k] + dp[i - 1][j - p[i-1][k]] );
+            }
+        
+        if( dp[C][M] == -1 )
+            cout << "no solution\n";
+        else
+            cout << dp[C][M] << "\n";
     }
 
     return 0;
