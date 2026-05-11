@@ -16,16 +16,15 @@ Answer Rod_Cutting(vec& P, int n) {
 
     for(int i = 1; i <= n; i++){
         int q = INT_MIN;
-        stringstream ss;
+        string ss = "";
         for(int j = 1; j <= i; j++)
             if( P[j-1] + R[i-j] > q ) {
                 q = P[j-1] + R[i-j];
                 
-                ss.str(""); ss.clear();
-                ss << j << "-" << i-j;
+                ss = to_string(j) + "-" + to_string(i-j);
             }
         R[i] = q;
-        S[i] = ss.str();
+        S[i] = ss;
     }
 
     Answer A;
