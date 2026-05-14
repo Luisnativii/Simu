@@ -1,2 +1,3 @@
 run
-*.py
+/01-Dynamic_Programming/run
+/02-Greedy_Programming/run
