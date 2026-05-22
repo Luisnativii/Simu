@@ -12,11 +12,20 @@ int main() {
         }
     );
 
-    int total_stops = 0;
-    int stop = 0;
-    while ( F < T &&  ) {
+    gas_stations.push_back(make_pair(T, -1));
 
+    int total_stops = 0;
+    int total_distance = 0;
+    for(int i = 0; i < gas_stations.size(); i++) {
+        if( F >= T ) break;
+        if( F >= gas_stations[i].first && F < gas_stations[i+1].first ) {
+            F += gas_stations[i].second;
+            total_stops++;
+        }
+        else continue;
     }
+
+    cout << "La cantidad mínima de paradas en el viaje es: " << total_stops << "\n";
 
     return 0;
 }
