@@ -33,39 +33,48 @@ public:
 
 class Vertex : public GraphElement {
 private:
-    vector<Edge*> edges;
+    vector<Edge*> starts;
+    vector<Edge*> ends;
 
 public:
     Vertex(int i, string n): GraphElement(i, n) {}
 
-    void addEdge(Edge* e) {
-        edges.push_back(e);
+    void addStartEdge(Edge* e) {
+        starts.push_back(e);
     }
 
-    vector<Edge*>& getEdges() {
-        return edges;
+    void addEndEdge(Edge* e) {
+        ends.push_back(e);
+    }
+
+    vector<Edge*>& getStartEdges() {
+        return starts;
+    }
+
+    vector<Edge*>& getEndEdges() {
+        return ends;
     }
 };
 
 class Edge : public GraphElement {
 private:
-    Vertex* v1;
-    Vertex* v2;
+    Vertex* start;
+    Vertex* end;
 
 public:
-    Edge(int i, string n, Vertex* a = nullptr, Vertex* b = nullptr): GraphElement(i, n), v1(a), v2(b) {}
+    Edge(int i, string n, Vertex* a = nullptr, Vertex* b = nullptr): GraphElement(i, n), start(a), end(b) {}
 
     void setVertices(Vertex* a, Vertex* b) {
-        v1 = a;
-        v2 = b;
+        start = a;
+        end = b;
     }
 
     Vertex* getV1() {
-        return v1;
+        return start;
     }
 
     Vertex* getV2() {
-        return v2;
+        return end;
     }
 };
 
@@ -91,8 +100,12 @@ public:
 
         for (Vertex* v : vertices) {
             cout << v->getId() << " - " << v->getName() << "\n";
-            cout << "Edges: ";
-            for (Edge* e : v->getEdges()) {
+            cout << "Start Edges: ";
+            for (Edge* e : v->getStartEdges()) {
+                cout << e->getName() << " ";
+            }
+            cout << "\nEnd Edges: ";
+            for (Edge* e : v->getEndEdges()) {
                 cout << e->getName() << " ";
             }
             cout << "\n\n";
@@ -102,12 +115,11 @@ public:
 
         for (Edge* e : edges) {
             cout << e->getId() << " - " << e->getName() << "\n";
-            cout << "Vertices: ";
             if (e->getV1()) {
-                cout << e->getV1()->getName() << " ";
+                cout << "Start: " << e->getV1()->getName() << "\n";
             }
             if (e->getV2()) {
-                cout << e->getV2()->getName() << " ";
+                cout << "End: " <<  e->getV2()->getName();
             }
             cout << "\n\n";
         }
