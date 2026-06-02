@@ -42,6 +42,14 @@ private:
 public:
     Graph() = default;
 
+    int getN() {
+        return vertices.size();
+    }
+
+    vector<Vertex*>& getVertices() {
+        return vertices;
+    }
+
     void addVertex(Vertex* v) {
         vertices.push_back(v);
     }
