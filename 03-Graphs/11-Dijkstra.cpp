@@ -31,7 +31,7 @@ void Dijkstra(Graph& g, Vertex* s) {
 
     cout << "List of distances:\n";
     for( Vertex* v: g.getVertices() ) {
-        cout << "Hasta vértice " << v->getId() << ": " << len[v->getId()-1] << "\n";
+        cout << "Hasta vértice " << v->getName() << ": " << len[v->getId()-1] << "\n";
     }
     cout << "\n";
 }
