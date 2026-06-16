@@ -14,13 +14,13 @@ void Dijkstra(Graph& g, Vertex* s) {
     H.push(make_pair(0, s));
 
     while( !H.empty() ) {
-        pair<int, Vertex*> p = H.top();
+        pair<int, Vertex*> v = H.top();
         H.pop();
 
-        if( p.first <= len[p.second->getId()-1] ){
-            for( pair<Vertex*,int> w: p.second->getEdges() ) {
-                int new_len = len[p.second->getId()-1] + w.second;
-                
+        if( v.first <= len[v.second->getId()-1] ){
+            for( pair<Vertex*,int> w: v.second->getEdges() ) {
+                int new_len = len[v.second->getId()-1] + w.second;
+
                 if( new_len < len[w.first->getId()-1] ) {
                     len[w.first->getId()-1] = new_len;
                     H.push(make_pair(new_len, w.first));
@@ -37,14 +37,17 @@ void Dijkstra(Graph& g, Vertex* s) {
 }
 
 int main() {
-    Vertex v1(1, "s");
-    Vertex v2(2, "v");
-    Vertex v3(3, "w");
-    Vertex v4(4, "t");
+    Vertex v1(1, "0");
+    Vertex v2(2, "1");
+    Vertex v3(3, "2");
+    Vertex v4(4, "3");
+    Vertex v5(5, "4");
 
-    v1.addEdge(&v2, 1); v1.addEdge(&v3, 4);
-    v2.addEdge(&v3, 2); v2.addEdge(&v4, 6);
-    v3.addEdge(&v4, 3);
+    v1.addEdge(&v2, 4); v1.addEdge(&v3, 8);
+    v2.addEdge(&v1, 4); v2.addEdge(&v3, 3); v2.addEdge(&v5, 6);
+    v3.addEdge(&v1, 8); v3.addEdge(&v2, 3); v3.addEdge(&v4, 2);
+    v4.addEdge(&v3, 2); v4.addEdge(&v5, 10);
+    v5.addEdge(&v2, 6); v5.addEdge(&v4, 10);
 
     Graph g;
 
@@ -52,6 +55,7 @@ int main() {
     g.addVertex(&v2);
     g.addVertex(&v3);
     g.addVertex(&v4);
+    g.addVertex(&v5);
 
     g.showGraph();
 
